@@ -78,7 +78,7 @@ Initializer
 
 Rule
   = name:IdentifierName __
-    displayName:(@StringLiteral __)?
+    displayName:(value:StringLiteral __ verbose:"~"? __ { return { name: value, verbose: !!verbose }; })?
     "=" __
     expression:Expression EOS
     {
@@ -89,7 +89,7 @@ Rule
         expression: displayName !== null
           ? {
               type: "named",
-              name: displayName,
+              ...displayName,
               expression,
               location: location()
             }

@@ -55,7 +55,8 @@ describe("Peggy grammar parser", () => {
     type: "choice",
     alternatives: [actionAbcd, actionEfgh, actionIjkl, actionMnop],
   };
-  const named               = { type: "named",       name: "start rule", expression: literalAbcd };
+  const named               = { type: "named",       name: "start rule", expression: literalAbcd, verbose: false };
+  const namedVerbose        = { type: "named",       name: "start rule", expression: literalAbcd, verbose: true };
   const ruleA               = { type: "rule",        name: "a",          expression: literalAbcd };
   const ruleB               = { type: "rule",        name: "b",          expression: literalEfgh };
   const ruleC               = { type: "rule",        name: "c",          expression: literalIjkl };
@@ -282,6 +283,9 @@ describe("Peggy grammar parser", () => {
     );
     expect("start\n'start rule'\n=\n'abcd';").to.parseAs(
       oneRuleGrammar(named)
+    );
+    expect("start\n'start rule'~\n=\n'abcd';").to.parseAs(
+      oneRuleGrammar(namedVerbose)
     );
   });
 
